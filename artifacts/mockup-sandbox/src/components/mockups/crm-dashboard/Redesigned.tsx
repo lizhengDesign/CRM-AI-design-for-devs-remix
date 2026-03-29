@@ -32,7 +32,8 @@ import {
   Database,
   ArrowLeftRight,
   LogOut,
-  Home
+  Home,
+  PanelLeftClose
 } from "lucide-react";
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -140,19 +141,20 @@ const interactions = [
 
 const NavSection = ({ label, items }: { label: string, items: { name: string, icon: any, count?: number }[] }) => (
   <>
-    <div className="mt-6 mb-1.5 px-3 text-[10px] font-semibold text-indigo-300/60 uppercase tracking-[0.15em]">
-      {label}
+    <div className="flex items-center pt-4 pb-2 px-2.5">
+      <span className="text-[11px] font-medium text-[#8b8d97] uppercase tracking-[0.06em]">{label}</span>
+      <div className="flex-1 h-px bg-[#e7e8ec] ml-3" />
     </div>
-    <div className="space-y-0.5">
+    <div className="space-y-px">
       {items.map((item) => (
         <button
           key={item.name}
-          className="w-full flex items-center gap-3 px-3 py-1.5 rounded-md text-sm font-medium text-indigo-100/70 hover:bg-indigo-800/30 hover:text-white transition-colors group"
+          className="w-full flex items-center gap-3 px-2.5 py-[7px] rounded-[10px] text-[14px] font-medium text-[#323439] hover:bg-white hover:shadow-[0_1.5px_4px_0_rgba(0,0,0,0.06)] transition-all group"
         >
-          <item.icon size={16} className="text-indigo-300/50 group-hover:text-indigo-300" />
-          <span className="flex-1 text-left">{item.name}</span>
+          <item.icon size={20} strokeWidth={1.8} className="text-[#8b8d97] opacity-80 group-hover:opacity-100 shrink-0" />
+          <span className="flex-1 text-left opacity-80 group-hover:opacity-100">{item.name}</span>
           {item.count !== undefined && (
-            <span className="text-xs text-indigo-300/40 tabular-nums">{item.count}</span>
+            <span className="text-[12px] text-[#8b8d97] tabular-nums opacity-60">{item.count}</span>
           )}
         </button>
       ))}
@@ -161,53 +163,79 @@ const NavSection = ({ label, items }: { label: string, items: { name: string, ic
 );
 
 const Sidebar = () => (
-  <aside className="w-60 bg-gradient-to-b from-[#1a237e] to-[#0d1442] text-indigo-100 flex flex-col h-screen overflow-y-auto flex-shrink-0">
-    <div className="p-4 pb-2">
-      <h1 className="font-bold text-white text-sm leading-tight">Real Estate Office</h1>
-      <p className="text-[11px] text-indigo-300/60">AI CRM</p>
-    </div>
-    
-    <div className="px-2 mt-1">
-      <button className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold bg-indigo-600/40 text-white border border-indigo-500/30">
-        <Home size={16} className="text-white" />
-        Home
+  <aside
+    className="w-[260px] border-r border-[#e7e8ec] flex flex-col h-screen overflow-y-auto flex-shrink-0 p-4 gap-4"
+    style={{ background: "linear-gradient(90deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 100%), linear-gradient(90deg, #f5f6f9 0%, #f5f6f9 100%)" }}
+  >
+    <div className="flex items-center justify-between h-8">
+      <div className="flex items-center gap-2">
+        <div className="w-6 h-6 rounded-[6px] bg-gradient-to-br from-[#ff8800] to-[#ff6600] flex items-center justify-center shadow-sm">
+          <Building2 size={14} className="text-white" strokeWidth={2.2} />
+        </div>
+        <span className="font-bold text-[15px] text-[#161618] leading-5">Real Estate Office</span>
+      </div>
+      <button className="p-1.5 rounded-full hover:bg-white/80 transition-colors">
+        <PanelLeftClose size={16} className="text-[#8b8d97]" />
       </button>
     </div>
 
-    <div className="px-2 flex-1 pb-4">
+    <div className="bg-white rounded-[10px] border border-[rgba(221,223,229,0.5)] shadow-[0_1.5px_4px_0_rgba(0,0,0,0.05)] overflow-hidden">
+      <div className="flex items-center px-2.5 py-2 gap-3">
+        <Search size={20} className="text-[#323439] opacity-80 shrink-0" strokeWidth={1.8} />
+        <span className="text-[14px] font-medium text-[#323439] opacity-80 flex-1">Search and actions</span>
+        <span className="text-[14px] font-medium text-[#48494c] opacity-40">⌘K</span>
+      </div>
+      <div className="mx-2.5 h-px bg-[#dddfe5]" />
+      <button className="w-full flex items-center gap-3 px-2.5 py-2 hover:bg-[#f5f6f9] transition-colors">
+        <Bell size={20} className="text-[#323439] opacity-80 shrink-0" strokeWidth={1.8} />
+        <span className="text-[14px] font-medium text-[#323439] opacity-80 flex-1 text-left">Notifications</span>
+        <span className="bg-[#0040dd] text-white text-[10px] font-bold min-w-[16px] h-4 flex items-center justify-center rounded-full px-1">3</span>
+      </button>
+    </div>
+
+    <div className="flex-1 overflow-y-auto -mx-1 px-1">
+      <div className="space-y-px">
+        <button className="w-full flex items-center gap-3 px-2.5 py-[7px] rounded-[10px] text-[14px] font-medium bg-white shadow-[0_1.5px_4px_0_rgba(0,0,0,0.06)] text-[#161618] border border-[rgba(221,223,229,0.3)]">
+          <Home size={20} strokeWidth={1.8} className="text-[#0040dd] shrink-0" />
+          <span className="flex-1 text-left">Home</span>
+        </button>
+      </div>
+
       <NavSection label="Contacts" items={contactsNav} />
       <NavSection label="Items" items={itemsNav} />
       <NavSection label="Interactions" items={interactionsNav} />
-    </div>
 
-    <div className="px-2 pb-2 border-t border-indigo-500/20 pt-2">
-      <div className="mb-1.5 px-3 text-[10px] font-semibold text-indigo-300/60 uppercase tracking-[0.15em]">
-        Configuration
+      <div className="flex items-center pt-4 pb-2 px-2.5">
+        <span className="text-[11px] font-medium text-[#8b8d97] uppercase tracking-[0.06em]">Configuration</span>
+        <div className="flex-1 h-px bg-[#e7e8ec] ml-3" />
       </div>
-      <div className="space-y-0.5">
+      <div className="space-y-px">
         {configNav.map((item) => (
           <button
             key={item.name}
-            className="w-full flex items-center gap-3 px-3 py-1.5 rounded-md text-sm font-medium text-indigo-100/70 hover:bg-indigo-800/30 hover:text-white transition-colors group"
+            className="w-full flex items-center gap-3 px-2.5 py-[7px] rounded-[10px] text-[14px] font-medium text-[#323439] hover:bg-white hover:shadow-[0_1.5px_4px_0_rgba(0,0,0,0.06)] transition-all group"
           >
-            <item.icon size={16} className="text-indigo-300/50 group-hover:text-indigo-300" />
-            <span className="flex-1 text-left">{item.name}</span>
+            <item.icon size={20} strokeWidth={1.8} className="text-[#8b8d97] opacity-80 group-hover:opacity-100 shrink-0" />
+            <span className="flex-1 text-left opacity-80 group-hover:opacity-100">{item.name}</span>
           </button>
         ))}
       </div>
+    </div>
 
-      <div className="mt-3 px-2 pb-1">
-        <div className="flex items-center gap-2">
-          <div>
-            <p className="text-sm font-semibold text-white leading-tight">Sergey Vlastuk</p>
-            <p className="text-[11px] text-indigo-300/50">admin</p>
-          </div>
+    <div className="border-t border-[#e7e8ec] pt-3 mt-1">
+      <div className="flex items-center gap-2.5 px-1">
+        <Avatar className="h-8 w-8 rounded-full border border-[#e7e8ec]">
+          <AvatarFallback className="bg-[#e7e8ec] text-[#48494c] text-xs font-semibold">SV</AvatarFallback>
+        </Avatar>
+        <div className="flex-1 min-w-0">
+          <p className="text-[13px] font-semibold text-[#161618] leading-tight truncate">Sergey Vlastuk</p>
+          <p className="text-[11px] text-[#8b8d97] truncate">admin</p>
         </div>
-        <button className="mt-2 w-full flex items-center gap-2 px-1 py-1 text-xs text-indigo-300/50 hover:text-indigo-200 transition-colors">
-          <LogOut size={13} />
-          Sign Out
-        </button>
       </div>
+      <button className="mt-2 flex items-center gap-2 px-1 py-1 text-[12px] text-[#8b8d97] hover:text-[#323439] transition-colors">
+        <LogOut size={14} strokeWidth={1.8} />
+        Sign Out
+      </button>
     </div>
   </aside>
 );
