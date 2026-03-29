@@ -25,7 +25,14 @@ import {
   ChevronLeft,
   ChevronRight,
   Filter,
-  Briefcase
+  Briefcase,
+  Swords,
+  ListChecks,
+  UserCog,
+  Database,
+  ArrowLeftRight,
+  LogOut,
+  Home
 } from "lucide-react";
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -40,20 +47,34 @@ import { Separator } from "@/components/ui/separator";
 
 // --- MOCK DATA ---
 
-const navigation = [
-  { name: "Home", icon: LayoutDashboard, active: true },
-  { name: "Accounts", icon: Building2 },
-  { name: "Contacts", icon: Contact },
-  { name: "Leads", icon: Users },
-  { name: "Partners", icon: Handshake },
-  { name: "Opportunities", icon: LineChart },
-  { name: "Support Cases", icon: LifeBuoy },
-  { name: "Subscriptions", icon: CreditCard },
-  { name: "Onboarding", icon: Rocket },
-  { name: "Escalations", icon: AlertTriangle },
-  { name: "Quotes", icon: FileText },
-  { name: "Tasks", icon: CheckSquare },
-  { name: "Appointments", icon: CalendarDays },
+const contactsNav = [
+  { name: "Accounts", icon: Building2, count: 15 },
+  { name: "Contacts", icon: Contact, count: 13 },
+  { name: "Leads", icon: Users, count: 5 },
+  { name: "Partners", icon: Handshake, count: 5 },
+  { name: "Competitors", icon: Swords, count: 4 },
+];
+
+const itemsNav = [
+  { name: "Opportunities", icon: LineChart, count: 14 },
+  { name: "Support Cases", icon: LifeBuoy, count: 7 },
+  { name: "Subscriptions", icon: CreditCard, count: 9 },
+  { name: "Onboardings", icon: Rocket, count: 1 },
+  { name: "Escalations", icon: AlertTriangle, count: 2 },
+  { name: "Quotes", icon: FileText, count: 3 },
+  { name: "Tasks", icon: CheckSquare, count: 11 },
+  { name: "Appointments", icon: CalendarDays, count: 9 },
+];
+
+const interactionsNav = [
+  { name: "All", icon: ListChecks, count: 15 },
+];
+
+const configNav = [
+  { name: "Users", icon: Users },
+  { name: "My Account", icon: UserCog },
+  { name: "View Schema", icon: Database },
+  { name: "Import / Export", icon: ArrowLeftRight },
 ];
 
 const overdueItems = [
@@ -117,64 +138,75 @@ const interactions = [
 
 // --- COMPONENTS ---
 
+const NavSection = ({ label, items }: { label: string, items: { name: string, icon: any, count?: number }[] }) => (
+  <>
+    <div className="mt-6 mb-1.5 px-3 text-[10px] font-semibold text-indigo-300/60 uppercase tracking-[0.15em]">
+      {label}
+    </div>
+    <div className="space-y-0.5">
+      {items.map((item) => (
+        <button
+          key={item.name}
+          className="w-full flex items-center gap-3 px-3 py-1.5 rounded-md text-sm font-medium text-indigo-100/70 hover:bg-indigo-800/30 hover:text-white transition-colors group"
+        >
+          <item.icon size={16} className="text-indigo-300/50 group-hover:text-indigo-300" />
+          <span className="flex-1 text-left">{item.name}</span>
+          {item.count !== undefined && (
+            <span className="text-xs text-indigo-300/40 tabular-nums">{item.count}</span>
+          )}
+        </button>
+      ))}
+    </div>
+  </>
+);
+
 const Sidebar = () => (
-  <aside className="w-64 bg-slate-950 text-slate-300 flex flex-col h-screen overflow-y-auto border-r border-slate-800 sticky top-0 flex-shrink-0">
-    <div className="p-4 flex items-center gap-3 border-b border-slate-800/50 mb-4">
-      <div className="bg-indigo-600 p-1.5 rounded-lg text-white">
-        <Building2 size={20} />
-      </div>
-      <div>
-        <h1 className="font-semibold text-slate-100 text-sm leading-tight">Real Estate CRM</h1>
-        <p className="text-xs text-slate-500">Workspace</p>
-      </div>
+  <aside className="w-60 bg-gradient-to-b from-[#1a237e] to-[#0d1442] text-indigo-100 flex flex-col h-screen overflow-y-auto flex-shrink-0">
+    <div className="p-4 pb-2">
+      <h1 className="font-bold text-white text-sm leading-tight">Real Estate Office</h1>
+      <p className="text-[11px] text-indigo-300/60">AI CRM</p>
     </div>
     
-    <div className="px-3 pb-6 flex-1">
+    <div className="px-2 mt-1">
+      <button className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold bg-indigo-600/40 text-white border border-indigo-500/30">
+        <Home size={16} className="text-white" />
+        Home
+      </button>
+    </div>
+
+    <div className="px-2 flex-1 pb-4">
+      <NavSection label="Contacts" items={contactsNav} />
+      <NavSection label="Items" items={itemsNav} />
+      <NavSection label="Interactions" items={interactionsNav} />
+    </div>
+
+    <div className="px-2 pb-2 border-t border-indigo-500/20 pt-2">
+      <div className="mb-1.5 px-3 text-[10px] font-semibold text-indigo-300/60 uppercase tracking-[0.15em]">
+        Configuration
+      </div>
       <div className="space-y-0.5">
-        {navigation.map((item) => (
+        {configNav.map((item) => (
           <button
             key={item.name}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-              item.active 
-                ? "bg-slate-800/80 text-white" 
-                : "text-slate-400 hover:bg-slate-900 hover:text-slate-100"
-            }`}
+            className="w-full flex items-center gap-3 px-3 py-1.5 rounded-md text-sm font-medium text-indigo-100/70 hover:bg-indigo-800/30 hover:text-white transition-colors group"
           >
-            <item.icon size={18} className={item.active ? "text-indigo-400" : "text-slate-500"} />
-            {item.name}
+            <item.icon size={16} className="text-indigo-300/50 group-hover:text-indigo-300" />
+            <span className="flex-1 text-left">{item.name}</span>
           </button>
         ))}
       </div>
 
-      <div className="mt-8 mb-2 px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-        Collections
-      </div>
-      <div className="space-y-0.5">
-        <button className="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-slate-400 hover:bg-slate-900 hover:text-slate-100 transition-colors">
-          <FolderOpen size={18} className="text-slate-500" />
-          VIP Clients
-        </button>
-        <button className="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-slate-400 hover:bg-slate-900 hover:text-slate-100 transition-colors">
-          <FolderOpen size={18} className="text-slate-500" />
-          Q2 Renewals
-        </button>
-      </div>
-    </div>
-
-    <div className="p-4 border-t border-slate-800/50">
-      <button className="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-slate-400 hover:bg-slate-900 hover:text-slate-100 transition-colors">
-        <Settings size={18} className="text-slate-500" />
-        Configuration
-      </button>
-      <div className="mt-4 flex items-center gap-3 px-2">
-        <Avatar className="h-8 w-8 ring-2 ring-slate-800">
-          <AvatarImage src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
-          <AvatarFallback className="bg-slate-800 text-slate-300">JD</AvatarFallback>
-        </Avatar>
-        <div className="flex-1 overflow-hidden">
-          <p className="text-sm font-medium text-slate-200 truncate">John Doe</p>
-          <p className="text-xs text-slate-500 truncate">john@realestate.ai</p>
+      <div className="mt-3 px-2 pb-1">
+        <div className="flex items-center gap-2">
+          <div>
+            <p className="text-sm font-semibold text-white leading-tight">Sergey Vlastuk</p>
+            <p className="text-[11px] text-indigo-300/50">admin</p>
+          </div>
         </div>
+        <button className="mt-2 w-full flex items-center gap-2 px-1 py-1 text-xs text-indigo-300/50 hover:text-indigo-200 transition-colors">
+          <LogOut size={13} />
+          Sign Out
+        </button>
       </div>
     </div>
   </aside>
