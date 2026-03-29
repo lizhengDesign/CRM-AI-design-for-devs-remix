@@ -515,11 +515,28 @@ export default function RedesignedDashboard() {
               </div>
             </div>
 
-            <div className="flex gap-3 overflow-x-auto pb-1">
+            <Tabs defaultValue="opportunity" className="w-full">
+              <div className="flex items-center gap-2 mb-3">
+                <TabsList className="bg-white border border-slate-200 shadow-sm p-1 h-auto flex-wrap">
+                  {pipelineData.map((p, idx) => (
+                    <TabsTrigger
+                      key={idx}
+                      value={p.name.split(" ")[0].toLowerCase()}
+                      className="text-xs px-3 py-1.5 gap-1.5 data-[state=active]:shadow-sm"
+                    >
+                      <span className={`w-2 h-2 rounded-full ${p.color} shrink-0`} />
+                      {p.name}
+                      <Badge variant="secondary" className="text-[9px] h-4 px-1 ml-0.5">{p.count}</Badge>
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </div>
               {pipelineData.map((pipeline, idx) => (
-                <MiniPipeline key={idx} pipeline={pipeline} />
+                <TabsContent key={idx} value={pipeline.name.split(" ")[0].toLowerCase()} className="mt-0">
+                  <MiniPipeline pipeline={pipeline} />
+                </TabsContent>
               ))}
-            </div>
+            </Tabs>
 
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
               <div className="lg:col-span-3 rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
