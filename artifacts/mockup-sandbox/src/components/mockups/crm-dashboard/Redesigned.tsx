@@ -33,7 +33,11 @@ import {
   ArrowLeftRight,
   LogOut,
   Home,
-  PanelLeftClose
+  PanelLeftClose,
+  Calendar,
+  X,
+  ChevronDown,
+  MessageSquare
 } from "lucide-react";
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -45,8 +49,6 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Separator } from "@/components/ui/separator";
-
-// --- MOCK DATA ---
 
 const contactsNav = [
   { name: "Accounts", icon: Building2, count: 15 },
@@ -79,65 +81,145 @@ const configNav = [
 ];
 
 const overdueItems = [
-  { id: 1, type: "Task", title: "Follow up with Sarah Re: Contract", due: "Yesterday", status: "OVERDUE", priority: "High" },
-  { id: 2, type: "Escalation", title: "Billing dispute #8992", due: "2 days ago", status: "OVERDUE", priority: "Critical" },
-  { id: 3, type: "Support", title: "API integration issue - John Doe", due: "Today 10:00 AM", status: "DUE SOON", priority: "Medium" },
+  { id: 1, type: "Support Case", icon: LifeBuoy, title: "Apex Financial — RingSense dashboard latency", deadline: "SLA deadline: Mar 18, 3:00 PM", status: "OVERDUE" },
+  { id: 2, type: "Support Case", icon: LifeBuoy, title: "Greenfield PM — After-hours voicemail routing", deadline: "Due: Mar 19, 3:00 PM", status: "OVERDUE" },
+  { id: 3, type: "Task", icon: CheckSquare, title: "Send Pinnacle Retail network assessment report", deadline: "Due: Mar 20, 3:00 PM", status: "OVERDUE" },
+  { id: 4, type: "Task", icon: CheckSquare, title: "Schedule Salesforce integration demo for H...", deadline: "Due: Mar 21, 10:00 AM", status: "OVERDUE" },
+  { id: 5, type: "Task", icon: CheckSquare, title: "Prepare Premier Dental remediation plan", deadline: "Due: Mar 21, 10:00 AM", status: "OVERDUE" },
+  { id: 6, type: "Task", icon: CheckSquare, title: "Call Patricia Gomez — pitch intake CCaaS", deadline: "Due: Mar 21, 12:00 PM", status: "OVERDUE" },
+  { id: 7, type: "Support Case", icon: LifeBuoy, title: "Pinnacle Retail — Store call drops (4 locations)", deadline: "SLA deadline: Mar 21, 3:00 PM", status: "OVERDUE" },
+  { id: 8, type: "Escalation", icon: AlertTriangle, title: "ESCL-2198: Premier Dental routing logic", deadline: "Resolution ETA: Mar 22, 2026", status: "OVERDUE" },
+  { id: 9, type: "Support Case", icon: LifeBuoy, title: "Premier Dental — Multi-office call routing", deadline: "SLA deadline: Mar 22, 10:00 AM", status: "OVERDUE" },
+  { id: 10, type: "Support Case", icon: LifeBuoy, title: "Summit Legal — Call recording not syncing", deadline: "SLA deadline: Mar 23, 10:00 AM", status: "OVERDUE" },
+  { id: 11, type: "Task", icon: CheckSquare, title: "Send co-marketing proposal to Mike Davis (...)", deadline: "Due: Mar 24, 10:00 AM", status: "OVERDUE" },
+  { id: 12, type: "Support Case", icon: LifeBuoy, title: "NovaCare — Patient callback feature request", deadline: "SLA deadline: Mar 24, 3:00 PM", status: "OVERDUE" },
+  { id: 13, type: "Support Case", icon: LifeBuoy, title: "Pacific Hospitality — Conference room phone", deadline: "SLA deadline: Mar 25, 3:00 PM", status: "OVERDUE" },
+  { id: 14, type: "Task", icon: CheckSquare, title: "Send revised proposal to Meridian Health", deadline: "Due: Mar 25, 3:00 PM", status: "OVERDUE" },
+  { id: 15, type: "Escalation", icon: AlertTriangle, title: "ESCL-2201: Pinnacle Retail store call drop", deadline: "Resolution ETA: Mar 28, 2026", status: "OVERDUE" },
+  { id: 16, type: "Task", icon: CheckSquare, title: "Complete BrightWave Health RFP response", deadline: "Due: Mar 28, 3:00 PM", status: "OVERDUE" },
 ];
 
-const schedule = [
-  { id: 1, time: "09:00 AM", title: "Daily Standup", type: "Internal" },
-  { id: 2, time: "11:30 AM", title: "Property Viewing - 124 Main St", type: "Meeting", client: "Alice Smith" },
-  { id: 3, time: "02:00 PM", title: "Q3 Strategy Sync", type: "Meeting", client: "Acme Corp" },
-  { id: 4, time: "04:15 PM", title: "Follow-up call - Demo", type: "Call", client: "Bob Johnson" },
+const calendarEvents = [
+  { id: 1, time: "8:00 AM - 9:30 AM", title: "Demo — Bright Horizons vs Zoom Phone", subtitle: "Bright Horizons Education · Scheduled", topOffset: 14, height: 12 },
 ];
 
-const pipelines = {
-  opportunities: [
-    { title: "Discovery", items: [
-      { id: 101, name: "Stark Industries Expansion", value: "$450k", company: "Stark Ind.", age: "2 days" },
-      { id: 102, name: "Wayne Ent. Lease", value: "$1.2M", company: "Wayne Ent.", age: "5 days" }
-    ]},
-    { title: "Proposal", items: [
-      { id: 103, name: "Acme Corp HQ Relocation", value: "$850k", company: "Acme Corp", age: "12 days" }
-    ]},
-    { title: "Negotiation", items: [
-      { id: 104, name: "Globex Warehouse", value: "$2.1M", company: "Globex", age: "20 days" }
-    ]},
-    { title: "Closed Won", items: [] }
+const pipelineData = [
+  {
+    name: "Opportunity Pipeline",
+    count: 14,
+    color: "bg-blue-500",
+    headerBg: "bg-blue-50 border-blue-200",
+    headerText: "text-blue-700",
+    columns: [
+      { title: "Prospecting", count: 6, items: [
+        { name: "Union Credit...", sub: "Lost" },
+        { name: "Atlas Logistic...", sub: "Lost" },
+        { name: "Summit Legal...", sub: "Discovery, Closed" },
+        { name: "TechVault — ...", sub: "Discovery, Closed" },
+      ]},
+      { title: "Discovery", count: 4, items: [
+        { name: "Pacific Hospit...", sub: "Closed Lost" },
+        { name: "Apex Financia...", sub: "Closed Lost" },
+        { name: "Coastal Manu...", sub: "Closed Lost" },
+        { name: "BrightWave H...", sub: "Solution Design" },
+      ]},
+      { title: "Solution Design", count: 3, items: [
+        { name: "Bright Horizo...", sub: "Proposal, Closed" },
+      ]},
+    ]
+  },
+  {
+    name: "Support Case Pipeline",
+    count: 7,
+    color: "bg-orange-500",
+    headerBg: "bg-orange-50 border-orange-200",
+    headerText: "text-orange-700",
+    columns: [
+      { title: "New", count: 1, items: [
+        { name: "Pacific Hospit...", sub: "Progress" },
+      ]},
+      { title: "Triaged", count: 1, items: [
+        { name: "NovaCare — ...", sub: "Escalated" },
+      ]},
+      { title: "In Progress", count: 1, items: [
+        { name: "Premier Dent...", sub: "Closed" },
+      ]},
+    ]
+  },
+  {
+    name: "Subscription Pipeline",
+    count: 9,
+    color: "bg-purple-500",
+    headerBg: "bg-purple-50 border-purple-200",
+    headerText: "text-purple-700",
+    columns: [
+      { title: "Onboarding", count: 0, items: [] },
+      { title: "Active", count: 6, items: [
+        { name: "TechVault — ...", sub: "Churned, Cancelled" },
+        { name: "Pacific Hospi...", sub: "Churned, Cancelled" },
+        { name: "Summit Legal...", sub: "Renewed, Active" },
+        { name: "Pinnacle Reta...", sub: "Renewed, Pending" },
+        { name: "Apex Financia...", sub: "Renewed, Pending" },
+      ]},
+      { title: "Renewal", count: 0, items: [] },
+      { title: "Pending", count: 0, items: [] },
+    ]
+  },
+  {
+    name: "Onboarding Pipeline",
+    count: 1,
+    color: "bg-green-500",
+    headerBg: "bg-green-50 border-green-200",
+    headerText: "text-green-700",
+    columns: [
+      { title: "Kickoff", count: 1, items: [
+        { name: "NovaCare — ...", sub: "Started" },
+        { name: "Onboarding...", sub: "Started" },
+      ]},
+      { title: "Configuration", count: 0, items: [] },
+      { title: "Training", count: 0, items: [] },
+    ]
+  },
+  {
+    name: "Escalation Pipeline",
+    count: 2,
+    color: "bg-red-500",
+    headerBg: "bg-red-50 border-red-200",
+    headerText: "text-red-700",
+    columns: [
+      { title: "Filed", count: 0, items: [] },
+      { title: "Acknowledged", count: 0, items: [] },
+      { title: "Investigating", count: 1, items: [
+        { name: "ESCL-2201: Pi...", sub: "" },
+      ]},
+    ]
+  },
+];
+
+const recentInteractions = [
+  { id: 1, date: "3/20/2026", type: "email", contact: "Janet Wu", notes: "Janet Wu: pilot accepted. Needs reference call and discount terms before April 8 board meeting." },
+  { id: 2, date: "3/20/2026", type: "voice", contact: "Jenny Liu", notes: "Jenny Liu: Frank excited, Helen harder sell. Must nail SF demo March 27. Factory floor visit requested." },
+  { id: 3, date: "3/20/2026", type: "voice", contact: "Derek Williams", notes: "Derek Williams demanded resolution plan by 5pm. RFP threat if not fixed in 2 weeks. Weekly status calls s..." },
+  { id: 4, date: "3/20/2026", type: "voice", contact: "Maria Santos", notes: "Maria Santos: CTO aware. Frame as network optimization. Willing to co-present remediation to Derek." },
+  { id: 5, date: "3/19/2026", type: "voice", contact: "Carlos Reyes", notes: "Carlos Reyes: lead with wallboard demo for Atlas. Redline Auto commission split needed." },
+  { id: 6, date: "3/19/2026", type: "voice", contact: "Rosa Martinez", notes: "Rosa Martinez upset. Offered free PS reconfiguration. Remediation call March 22." },
+  { id: 7, date: "3/19/2026", type: "voice", contact: "Rachel Hoffman", notes: "Rachel Hoffman: Meridian migration scope — 6–8 weeks, $42k. SOW by March 24." },
+  { id: 8, date: "3/19/2026", type: "voice", contact: "Mike Davis", notes: "Mike Davis: conference with Janet Wu next week. BrightWave RFP deadline March 28. Co-marketing bud..." },
+  { id: 9, date: "3/18/2026", type: "voice", contact: "Greg Tanaka", notes: "Greg Tanaka: Zoom leading. Agreed to side-by-side demo March 28. Decision by mid-April." },
+  { id: 10, date: "3/18/2026", type: "email", contact: "Mark Delgado", notes: "Mark Delgado wants expansion seats at current rate. Samantha wants RingSense coaching beta." },
+];
+
+const selectedInteraction = {
+  title: "Mike Davis: conference with Janet Wu next week. BrightWave RFP deadline March 28. Co-marketing budget request.",
+  type: "voice",
+  date: "3/19/2026, 9:00:00 AM",
+  fullNote: "Mike Davis: conference with Janet Wu next week. BrightWave RFP deadline March 28. Co-marketing budget request.",
+  related: [
+    { label: "Partner", value: "Mike Davis" },
+    { label: "Opportunity", value: "Meridian Health — UCaaS + CCaaS Proposal" },
   ],
-  supportCases: [
-    { title: "New", items: [
-      { id: 201, name: "Login Issue", priority: "High", client: "Jane Doe" }
-    ]},
-    { title: "In Progress", items: [
-      { id: 202, name: "Data Export Failed", priority: "Medium", client: "Acme Corp" },
-      { id: 203, name: "Billing Inquiry", priority: "Low", client: "Stark Ind." }
-    ]},
-    { title: "Waiting on Customer", items: [
-      { id: 204, name: "Clarification needed on API", priority: "Medium", client: "Globex" }
-    ]}
-  ],
-  onboarding: [
-    { title: "Kickoff", items: [
-      { id: 301, name: "Initech Setup", status: "On Track" }
-    ]},
-    { title: "Data Migration", items: [
-      { id: 302, name: "Umbrella Corp Migration", status: "Delayed" }
-    ]},
-    { title: "Training", items: [
-      { id: 303, name: "Massive Dynamic Training", status: "On Track" }
-    ]}
-  ]
+  transcript: "Mike Davis checking in on Meridian. Seeing Janet Wu at healthcare conference. BrightWave RFP deadline firm March 28. Asking about co-marketing budget."
 };
-
-const interactions = [
-  { id: 1, date: "Mar 29, 2024 - 14:32", type: "Email", contact: "Alice Smith", company: "Acme Corp", notes: "Sent the updated proposal for the downtown office space. Waiting for their review." },
-  { id: 2, date: "Mar 29, 2024 - 11:15", type: "Voice", contact: "Bob Johnson", company: "Globex", notes: "Discussed the warehouse lease terms. They are asking for a 5% discount." },
-  { id: 3, date: "Mar 28, 2024 - 16:45", type: "Email", contact: "Jane Doe", company: "Stark Ind.", notes: "Follow up on the expansion plans. No response yet." },
-  { id: 4, date: "Mar 28, 2024 - 09:30", type: "Meeting", contact: "Bruce Wayne", company: "Wayne Ent.", notes: "Initial property walkthrough. Very positive feedback." },
-];
-
-// --- COMPONENTS ---
 
 const NavSection = ({ label, items, collapsed }: { label: string, items: { name: string, icon: any, count?: number }[], collapsed?: boolean }) => (
   <>
@@ -295,243 +377,233 @@ const Sidebar = ({ collapsed, onToggle }: { collapsed: boolean, onToggle: () => 
   </aside>
 );
 
-const KanbanBoard = ({ data }: { data: { title: string, items: any[] }[] }) => (
-  <div className="flex h-full gap-4 pb-4 overflow-x-auto">
-    {data.map((col, idx) => (
-      <div key={idx} className="flex-shrink-0 w-72 flex flex-col gap-3">
-        <div className="flex items-center justify-between pb-2">
-          <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-2">
-            {col.title}
-            <span className="bg-slate-100 dark:bg-slate-800 text-slate-500 text-xs px-2 py-0.5 rounded-full">
-              {col.items.length}
-            </span>
-          </h3>
-          <Button variant="ghost" size="icon" className="h-6 w-6 text-slate-400">
-            <Plus size={14} />
-          </Button>
+const typeIconColor = (type: string) => {
+  switch (type) {
+    case "Support Case": return "text-blue-600 bg-blue-50";
+    case "Task": return "text-amber-600 bg-amber-50";
+    case "Escalation": return "text-red-600 bg-red-50";
+    default: return "text-slate-600 bg-slate-50";
+  }
+};
+
+const ScheduleCalendar = () => {
+  const hours = ["7 AM", "8 AM", "9 AM", "10 AM", "11 AM", "12 PM"];
+  return (
+    <div className="flex flex-col h-full">
+      <div className="px-4 pt-4 pb-3 border-b border-slate-100 flex items-center justify-between">
+        <div>
+          <div className="flex items-center gap-2">
+            <Calendar size={16} className="text-blue-600" />
+            <h3 className="text-sm font-semibold text-slate-800">Schedule Calendar</h3>
+            <CalendarDays size={14} className="text-slate-400" />
+          </div>
+          <p className="text-lg font-semibold text-slate-900 mt-1">Saturday, March 28</p>
+          <p className="text-xs text-slate-500">Date picker view for the selected day's scheduled items.</p>
         </div>
-        <div className="flex-1 space-y-3 min-h-[150px] bg-slate-50/50 dark:bg-slate-900/50 rounded-lg p-2 border border-slate-100 dark:border-slate-800 border-dashed">
-          {col.items.map(item => (
-            <Card key={item.id} className="cursor-pointer hover:shadow-md transition-all hover:border-indigo-200 dark:hover:border-indigo-800 group">
-              <CardContent className="p-3">
-                <div className="flex justify-between items-start mb-2">
-                  <p className="font-medium text-sm text-slate-900 dark:text-slate-100 leading-tight group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{item.name}</p>
-                  <Button variant="ghost" size="icon" className="h-5 w-5 opacity-0 group-hover:opacity-100 -mr-1 -mt-1">
-                    <MoreHorizontal size={14} />
-                  </Button>
-                </div>
-                {item.company && <p className="text-xs text-slate-500 mb-2 flex items-center gap-1"><Building2 size={10} />{item.company}</p>}
-                {item.client && <p className="text-xs text-slate-500 mb-2 flex items-center gap-1"><Contact size={10} />{item.client}</p>}
-                
-                <div className="flex items-center justify-between mt-3">
-                  {item.value && <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10 px-1.5 py-0.5 rounded">{item.value}</span>}
-                  {item.priority && (
-                    <Badge variant={item.priority === 'High' ? 'destructive' : 'secondary'} className="text-[10px] px-1.5 py-0">
-                      {item.priority}
-                    </Badge>
-                  )}
-                  {item.status && (
-                    <span className="text-xs text-slate-500 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">{item.status}</span>
-                  )}
-                  {item.age && <span className="text-xs text-slate-400 flex items-center gap-1"><Clock size={10}/> {item.age}</span>}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-          {col.items.length === 0 && (
-            <div className="h-full flex items-center justify-center text-xs text-slate-400 italic py-8">
-              No items
+        <p className="text-xs text-slate-400 whitespace-nowrap">8:00 AM first start</p>
+      </div>
+      <div className="px-3 py-2 border-b border-slate-100 flex items-center gap-2">
+        <Button variant="outline" size="sm" className="h-7 text-xs px-2.5">Prev</Button>
+        <Button variant="outline" size="sm" className="h-7 text-xs px-2.5">Today</Button>
+        <Input defaultValue="03/28/2026" className="h-7 w-28 text-xs border-slate-200" />
+        <Calendar size={14} className="text-slate-400" />
+        <Button variant="outline" size="sm" className="h-7 text-xs px-2.5">Next</Button>
+      </div>
+      <div className="flex-1 overflow-auto">
+        <div className="relative">
+          {hours.map((hour, idx) => (
+            <div key={idx} className="flex items-start h-14 border-b border-slate-50">
+              <span className="w-16 text-right pr-3 text-[11px] text-slate-400 pt-0.5 shrink-0">{hour}</span>
+              <div className="flex-1 border-l border-slate-100 h-full relative">
+                {hour === "8 AM" && (
+                  <div className="absolute left-2 right-2 top-0 rounded-md bg-blue-50 border border-blue-200 p-2" style={{ height: "84px" }}>
+                    <p className="text-xs font-semibold text-blue-800">8:00 AM - 9:30 AM</p>
+                    <p className="text-xs font-medium text-blue-700 mt-0.5">Demo — Bright Horizons vs Zoom Phone</p>
+                    <p className="text-[10px] text-blue-500 mt-0.5">Bright Horizons Education · Scheduled</p>
+                  </div>
+                )}
+                {hour === "8 AM" && (
+                  <div className="absolute right-0 top-0 text-[10px] text-slate-400 bg-white px-1.5 py-0.5 rounded border border-slate-100">
+                    Appointment
+                  </div>
+                )}
+              </div>
             </div>
-          )}
+          ))}
         </div>
       </div>
-    ))}
+    </div>
+  );
+};
+
+const MiniPipeline = ({ pipeline }: { pipeline: typeof pipelineData[0] }) => (
+  <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden flex flex-col min-w-[200px] flex-1">
+    <div className={`px-3 py-2 border-b flex items-center justify-between ${pipeline.headerBg}`}>
+      <div className="flex items-center gap-2">
+        <div className={`w-2 h-2 rounded-full ${pipeline.color}`} />
+        <h4 className={`text-xs font-semibold ${pipeline.headerText}`}>{pipeline.name}</h4>
+        <span className="text-[10px] text-slate-500 font-medium">{pipeline.count}</span>
+      </div>
+      <MoreHorizontal size={14} className="text-slate-400" />
+    </div>
+    <div className="flex flex-1 divide-x divide-slate-100 overflow-x-auto">
+      {pipeline.columns.map((col, ci) => (
+        <div key={ci} className="flex-1 min-w-[100px] p-1.5">
+          <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide px-1 pb-1 flex items-center justify-between">
+            <span>{col.title}</span>
+            <span className="text-slate-400">{col.count}</span>
+          </div>
+          <div className="space-y-1">
+            {col.items.map((item, ii) => (
+              <div key={ii} className="bg-slate-50 rounded-md px-2 py-1.5 hover:bg-slate-100 transition-colors cursor-pointer border border-slate-100">
+                <p className="text-[11px] font-medium text-slate-700 truncate">{item.name}</p>
+                {item.sub && <p className="text-[10px] text-slate-400 truncate">{item.sub}</p>}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
   </div>
 );
 
 export default function RedesignedDashboard() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [selectedInteractionId, setSelectedInteractionId] = useState<number | null>(8);
+
   return (
-    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950 font-sans">
+    <div className="flex h-screen bg-[#f5f6f9] font-['Inter',sans-serif]">
       <Sidebar collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed(!sidebarCollapsed)} />
       
       <main className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
-        {/* Header */}
-        <header className="h-16 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-6 flex-shrink-0 z-10">
-          <div className="flex items-center gap-4">
-            <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-100">Home</h2>
-            <div className="hidden md:flex items-center relative">
-              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-              <Input 
-                placeholder="Search anything..." 
-                className="w-64 pl-9 bg-slate-100 dark:bg-slate-900 border-none h-9 text-sm focus-visible:ring-1 focus-visible:ring-indigo-500"
-              />
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <Button variant="outline" size="sm" className="hidden md:flex items-center gap-2 text-slate-600 dark:text-slate-300">
-              <Plus size={16} /> New Record
-            </Button>
-            <Button variant="ghost" size="icon" className="text-slate-500 relative">
-              <Bell size={18} />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border border-white dark:border-slate-950"></span>
-            </Button>
-          </div>
-        </header>
-
-        {/* Scrollable Content */}
-        <ScrollArea className="flex-1 px-6 py-6">
-          <div className="max-w-[1400px] mx-auto space-y-6">
+        <div className="flex-1 overflow-auto">
+          <div className="p-4 space-y-4">
             
-            {/* Top Row: Alerts & Schedule */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              
-              {/* Due / Overdue */}
-              <Card className="lg:col-span-2 border-red-100 dark:border-red-900/30 shadow-sm overflow-hidden flex flex-col">
-                <div className="bg-red-50 dark:bg-red-950/20 border-b border-red-100 dark:border-red-900/30 px-5 py-3 flex justify-between items-center">
-                  <div className="flex items-center gap-2 text-red-700 dark:text-red-400 font-semibold">
-                    <AlertTriangle size={18} />
-                    <span>Action Required</span>
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+              <div className="lg:col-span-3 rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden flex flex-col">
+                <div className="px-4 py-2.5 border-b border-slate-100 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <AlertTriangle size={14} className="text-red-500" />
+                    <h3 className="text-sm font-semibold text-red-600">Due / Overdue</h3>
+                    <Badge variant="secondary" className="text-[10px] h-5 px-1.5 bg-red-50 text-red-600 border-red-200">{overdueItems.length}</Badge>
                   </div>
-                  <Badge variant="outline" className="bg-white dark:bg-slate-900 text-red-600 border-red-200">{overdueItems.length} Items</Badge>
+                  <MoreHorizontal size={14} className="text-slate-400" />
                 </div>
-                <CardContent className="p-0 flex-1">
-                  <div className="divide-y divide-slate-100 dark:divide-slate-800">
+                <ScrollArea className="max-h-[320px]">
+                  <div className="divide-y divide-slate-50">
                     {overdueItems.map(item => (
-                      <div key={item.id} className="p-4 flex items-start gap-4 hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors">
-                        <div className={`mt-0.5 p-1.5 rounded-md ${item.status === 'OVERDUE' ? 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400' : 'bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400'}`}>
-                          {item.type === 'Task' ? <CheckSquare size={16}/> : item.type === 'Support' ? <LifeBuoy size={16}/> : <AlertTriangle size={16}/>}
+                      <div key={item.id} className="flex items-center gap-3 px-4 py-2 hover:bg-slate-50/50 transition-colors group">
+                        <div className={`p-1 rounded-md shrink-0 ${typeIconColor(item.type)}`}>
+                          <item.icon size={13} />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-900 dark:text-slate-100 truncate">{item.title}</p>
-                          <div className="flex items-center gap-3 mt-1 text-xs text-slate-500">
-                            <span className="font-medium text-slate-700 dark:text-slate-300">{item.type}</span>
-                            <span className="flex items-center gap-1 text-red-600 dark:text-red-400"><Clock size={12}/> {item.due}</span>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[11px] font-medium text-slate-500 shrink-0">{item.type}</span>
+                            <span className="text-xs text-slate-800 font-medium truncate">{item.title}</span>
                           </div>
                         </div>
-                        <Button variant="secondary" size="sm" className="h-8 shrink-0">Review</Button>
+                        <span className="text-[10px] text-slate-400 whitespace-nowrap shrink-0">{item.deadline}</span>
+                        <Badge variant="destructive" className="text-[9px] h-4 px-1.5 shrink-0">OVERDUE</Badge>
                       </div>
                     ))}
                   </div>
-                </CardContent>
-              </Card>
+                </ScrollArea>
+              </div>
 
-              {/* Today's Schedule */}
-              <Card className="shadow-sm flex flex-col h-[300px]">
-                <CardHeader className="px-5 py-4 border-b border-slate-100 dark:border-slate-800 pb-3">
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-base font-semibold">Today's Schedule</CardTitle>
-                    <div className="flex items-center gap-1 text-slate-400">
-                      <Button variant="ghost" size="icon" className="h-6 w-6"><ChevronLeft size={16}/></Button>
-                      <span className="text-xs font-medium text-slate-700 dark:text-slate-300">Mar 29</span>
-                      <Button variant="ghost" size="icon" className="h-6 w-6"><ChevronRight size={16}/></Button>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="p-0 flex-1 overflow-auto">
-                  <div className="divide-y divide-slate-100 dark:divide-slate-800">
-                    {schedule.map(item => (
-                      <div key={item.id} className="p-4 flex gap-4 hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors">
-                        <div className="w-16 flex-shrink-0 text-right">
-                          <p className="text-xs font-semibold text-slate-900 dark:text-slate-100">{item.time}</p>
-                        </div>
-                        <div className="flex-1 border-l-2 border-indigo-500 pl-4 py-0.5">
-                          <p className="text-sm font-medium text-slate-900 dark:text-slate-100">{item.title}</p>
-                          {item.client && <p className="text-xs text-slate-500 mt-1">{item.client}</p>}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-                <CardFooter className="p-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
-                  <Button variant="ghost" className="w-full text-xs text-indigo-600 dark:text-indigo-400">View Full Calendar</Button>
-                </CardFooter>
-              </Card>
-
+              <div className="lg:col-span-2 rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden flex flex-col max-h-[380px]">
+                <ScheduleCalendar />
+              </div>
             </div>
 
-            {/* Pipelines Area */}
-            <div className="pt-2">
-              <Tabs defaultValue="opportunities" className="w-full">
-                <div className="flex items-center justify-between mb-4">
-                  <TabsList className="bg-slate-200/50 dark:bg-slate-800/50 p-1">
-                    <TabsTrigger value="opportunities" className="text-xs sm:text-sm px-3 sm:px-4"><Briefcase className="w-4 h-4 mr-2 hidden sm:inline-block"/>Opportunities</TabsTrigger>
-                    <TabsTrigger value="support" className="text-xs sm:text-sm px-3 sm:px-4"><LifeBuoy className="w-4 h-4 mr-2 hidden sm:inline-block"/>Support</TabsTrigger>
-                    <TabsTrigger value="onboarding" className="text-xs sm:text-sm px-3 sm:px-4"><Rocket className="w-4 h-4 mr-2 hidden sm:inline-block"/>Onboarding</TabsTrigger>
-                  </TabsList>
-                  <Button variant="outline" size="sm" className="hidden sm:flex items-center gap-2">
-                    <Filter size={14} /> Filter
-                  </Button>
+            <div className="flex gap-3 overflow-x-auto pb-1">
+              {pipelineData.map((pipeline, idx) => (
+                <MiniPipeline key={idx} pipeline={pipeline} />
+              ))}
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+              <div className="lg:col-span-3 rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+                <div className="px-4 py-2.5 border-b border-slate-100 flex items-center gap-2">
+                  <MessageSquare size={14} className="text-blue-600" />
+                  <h3 className="text-sm font-semibold text-slate-800">Recent Interactions</h3>
+                  <Badge variant="secondary" className="text-[10px] h-5 px-1.5">{recentInteractions.length}</Badge>
                 </div>
+                <ScrollArea className="max-h-[280px]">
+                  <Table>
+                    <TableBody>
+                      {recentInteractions.map(interaction => (
+                        <TableRow
+                          key={interaction.id}
+                          className={`cursor-pointer transition-colors border-slate-50 ${selectedInteractionId === interaction.id ? "bg-blue-50/50" : "hover:bg-slate-50/50"}`}
+                          onClick={() => setSelectedInteractionId(interaction.id)}
+                        >
+                          <TableCell className="py-2 px-3 w-[80px] text-[11px] text-slate-400 whitespace-nowrap">{interaction.date}</TableCell>
+                          <TableCell className="py-2 px-2 w-[50px]">
+                            <div className={`inline-flex items-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded-full ${
+                              interaction.type === "email" ? "bg-blue-50 text-blue-600" : "bg-green-50 text-green-600"
+                            }`}>
+                              {interaction.type === "email" ? <Mail size={10} /> : <Phone size={10} />}
+                              {interaction.type}
+                            </div>
+                          </TableCell>
+                          <TableCell className="py-2 px-2 text-xs font-medium text-slate-700 w-[100px] whitespace-nowrap">{interaction.contact}</TableCell>
+                          <TableCell className="py-2 px-2 text-[11px] text-slate-500 truncate max-w-[300px]">{interaction.notes}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </ScrollArea>
+              </div>
 
-                <TabsContent value="opportunities" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
-                  <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 overflow-hidden">
-                    <KanbanBoard data={pipelines.opportunities} />
+              {selectedInteractionId && (
+                <div className="lg:col-span-2 rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden flex flex-col max-h-[340px]">
+                  <div className="px-4 py-2.5 border-b border-slate-100 flex items-center justify-between">
+                    <p className="text-xs text-slate-700 font-medium truncate flex-1">{selectedInteraction.title}</p>
+                    <button onClick={() => setSelectedInteractionId(null)} className="p-1 hover:bg-slate-100 rounded transition-colors shrink-0 ml-2">
+                      <X size={14} className="text-slate-400" />
+                    </button>
                   </div>
-                </TabsContent>
-                
-                <TabsContent value="support" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
-                  <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 overflow-hidden">
-                    <KanbanBoard data={pipelines.supportCases} />
-                  </div>
-                </TabsContent>
+                  <ScrollArea className="flex-1">
+                    <div className="p-4 space-y-3">
+                      <div className="bg-slate-50 rounded-lg p-3 border border-slate-100">
+                        <p className="text-sm font-medium text-slate-800 leading-relaxed">{selectedInteraction.fullNote}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="inline-flex items-center gap-1 text-[11px] font-medium px-2 py-1 rounded-full bg-green-50 text-green-600 border border-green-200">
+                          <Phone size={11} />
+                          {selectedInteraction.type}
+                        </div>
+                        <span className="text-[11px] text-slate-400">{selectedInteraction.date}</span>
+                      </div>
+                      <p className="text-[11px] text-slate-500 leading-relaxed">{selectedInteraction.fullNote}</p>
 
-                <TabsContent value="onboarding" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
-                  <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 overflow-hidden">
-                    <KanbanBoard data={pipelines.onboarding} />
-                  </div>
-                </TabsContent>
-              </Tabs>
+                      <div className="pt-2 border-t border-slate-100">
+                        <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Related</p>
+                        {selectedInteraction.related.map((rel, i) => (
+                          <div key={i} className="flex items-center gap-2 mb-1.5">
+                            <span className="text-[10px] text-slate-400 w-16">{rel.label}</span>
+                            <span className="text-xs text-blue-600 font-medium hover:underline cursor-pointer">{rel.value}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="pt-2 border-t border-slate-100">
+                        <div className="flex items-center gap-1 mb-2">
+                          <ChevronDown size={12} className="text-slate-400" />
+                          <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Transcript</p>
+                        </div>
+                        <p className="text-xs text-slate-600 leading-relaxed bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                          {selectedInteraction.transcript}
+                        </p>
+                      </div>
+                    </div>
+                  </ScrollArea>
+                </div>
+              )}
             </div>
-
-            {/* Recent Interactions Table */}
-            <Card className="shadow-sm">
-              <CardHeader className="px-5 py-4 border-b border-slate-100 dark:border-slate-800">
-                <CardTitle className="text-base font-semibold flex items-center gap-2">
-                  <Clock size={18} className="text-slate-500" />
-                  Recent Interactions
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-0">
-                <Table>
-                  <TableHeader className="bg-slate-50/50 dark:bg-slate-900/50">
-                    <TableRow className="hover:bg-transparent border-slate-100 dark:border-slate-800">
-                      <TableHead className="w-[180px] text-xs font-semibold uppercase tracking-wider">Date</TableHead>
-                      <TableHead className="w-[120px] text-xs font-semibold uppercase tracking-wider">Type</TableHead>
-                      <TableHead className="w-[200px] text-xs font-semibold uppercase tracking-wider">Contact</TableHead>
-                      <TableHead className="text-xs font-semibold uppercase tracking-wider">Notes</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {interactions.map((interaction) => (
-                      <TableRow key={interaction.id} className="border-slate-100 dark:border-slate-800 hover:bg-slate-50/80 dark:hover:bg-slate-900/80">
-                        <TableCell className="text-sm text-slate-500 py-3">{interaction.date}</TableCell>
-                        <TableCell className="py-3">
-                          <div className="flex items-center gap-1.5 text-sm font-medium text-slate-700 dark:text-slate-300">
-                            {interaction.type === 'Email' ? <Mail size={14} className="text-blue-500" /> : 
-                             interaction.type === 'Voice' ? <Phone size={14} className="text-emerald-500" /> : 
-                             <Users size={14} className="text-purple-500" />}
-                            {interaction.type}
-                          </div>
-                        </TableCell>
-                        <TableCell className="py-3">
-                          <div>
-                            <p className="text-sm font-medium text-slate-900 dark:text-slate-100">{interaction.contact}</p>
-                            <p className="text-xs text-slate-500">{interaction.company}</p>
-                          </div>
-                        </TableCell>
-                        <TableCell className="py-3 text-sm text-slate-600 dark:text-slate-400 max-w-[400px] truncate">
-                          {interaction.notes}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </CardContent>
-            </Card>
 
           </div>
-        </ScrollArea>
+        </div>
       </main>
     </div>
   );
