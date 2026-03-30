@@ -490,36 +490,34 @@ export default function RedesignedDashboard() {
                   </div>
                   <MoreHorizontal size={16} className="text-[#8b8d97]" />
                 </div>
-                <ScrollArea className="max-h-[320px]">
-                  <div className="divide-y divide-[#f0f1f4]">
-                    {dueItems.map(item => {
-                      const statusStyle = item.status === "OVERDUE"
-                        ? "text-red-600 bg-red-50 border-red-200"
-                        : item.status === "DUE TODAY"
-                        ? "text-amber-600 bg-amber-50 border-amber-200"
-                        : item.status === "DUE SOON"
-                        ? "text-orange-500 bg-orange-50 border-orange-200"
-                        : "text-[#8b8d97] bg-[#f0f1f4] border-[#e7e8ec]";
-                      return (
-                        <div key={item.id} className="flex items-center gap-3 px-4 py-2.5 hover:bg-[#f8f9fb] transition-colors group">
-                          <div className={`p-1.5 rounded-[8px] shrink-0 ${typeIconColor(item.type)}`}>
-                            <item.icon size={14} strokeWidth={1.8} />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2">
-                              <span className="text-[11px] font-semibold text-[#8b8d97] shrink-0">{item.type}</span>
-                              <span className="text-[12px] text-[#323439] font-medium truncate">{item.title}</span>
-                            </div>
-                          </div>
-                          <span className="text-[10px] text-[#8b8d97] whitespace-nowrap shrink-0">{item.deadline}</span>
-                          <span className={`text-[9px] font-bold border rounded-full px-2 py-0.5 shrink-0 uppercase tracking-wider ${statusStyle}`}>
-                            {item.status === "OVERDUE" ? "Overdue" : item.status === "DUE TODAY" ? "Today" : item.status === "DUE SOON" ? "Soon" : "Upcoming"}
-                          </span>
+                <div className="divide-y divide-[#f0f1f4]">
+                  {dueItems.map(item => {
+                    const statusStyle = item.status === "OVERDUE"
+                      ? "text-red-600 bg-red-50 border-red-200"
+                      : item.status === "DUE TODAY"
+                      ? "text-amber-600 bg-amber-50 border-amber-200"
+                      : item.status === "DUE SOON"
+                      ? "text-orange-500 bg-orange-50 border-orange-200"
+                      : "text-[#8b8d97] bg-[#f0f1f4] border-[#e7e8ec]";
+                    return (
+                      <div key={item.id} className="flex items-center gap-3 px-4 py-2.5 hover:bg-[#f8f9fb] transition-colors group">
+                        <div className={`p-1.5 rounded-[8px] shrink-0 ${typeIconColor(item.type)}`}>
+                          <item.icon size={14} strokeWidth={1.8} />
                         </div>
-                      );
-                    })}
-                  </div>
-                </ScrollArea>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[11px] font-semibold text-[#8b8d97] shrink-0">{item.type}</span>
+                            <span className="text-[12px] text-[#323439] font-medium truncate">{item.title}</span>
+                          </div>
+                        </div>
+                        <span className="text-[10px] text-[#8b8d97] whitespace-nowrap shrink-0">{item.deadline}</span>
+                        <span className={`text-[9px] font-bold border rounded-full px-2 py-0.5 shrink-0 uppercase tracking-wider ${statusStyle}`}>
+                          {item.status === "OVERDUE" ? "Overdue" : item.status === "DUE TODAY" ? "Today" : item.status === "DUE SOON" ? "Soon" : "Upcoming"}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
 
               <div className="lg:col-span-2 rounded-[10px] bg-white border border-[#e7e8ec] shadow-[0_1.5px_4px_0_rgba(0,0,0,0.05)] overflow-hidden flex flex-col max-h-[380px]">
