@@ -80,23 +80,23 @@ const configNav = [
   { name: "Import / Export", icon: ArrowLeftRight },
 ];
 
-const overdueItems = [
+const dueItems = [
   { id: 1, type: "Support Case", icon: LifeBuoy, title: "Apex Financial — RingSense dashboard latency", deadline: "SLA deadline: Mar 18, 3:00 PM", status: "OVERDUE" },
-  { id: 2, type: "Support Case", icon: LifeBuoy, title: "Greenfield PM — After-hours voicemail routing", deadline: "Due: Mar 19, 3:00 PM", status: "OVERDUE" },
-  { id: 3, type: "Task", icon: CheckSquare, title: "Send Pinnacle Retail network assessment report", deadline: "Due: Mar 20, 3:00 PM", status: "OVERDUE" },
-  { id: 4, type: "Task", icon: CheckSquare, title: "Schedule Salesforce integration demo for H...", deadline: "Due: Mar 21, 10:00 AM", status: "OVERDUE" },
-  { id: 5, type: "Task", icon: CheckSquare, title: "Prepare Premier Dental remediation plan", deadline: "Due: Mar 21, 10:00 AM", status: "OVERDUE" },
-  { id: 6, type: "Task", icon: CheckSquare, title: "Call Patricia Gomez — pitch intake CCaaS", deadline: "Due: Mar 21, 12:00 PM", status: "OVERDUE" },
-  { id: 7, type: "Support Case", icon: LifeBuoy, title: "Pinnacle Retail — Store call drops (4 locations)", deadline: "SLA deadline: Mar 21, 3:00 PM", status: "OVERDUE" },
-  { id: 8, type: "Escalation", icon: AlertTriangle, title: "ESCL-2198: Premier Dental routing logic", deadline: "Resolution ETA: Mar 22, 2026", status: "OVERDUE" },
-  { id: 9, type: "Support Case", icon: LifeBuoy, title: "Premier Dental — Multi-office call routing", deadline: "SLA deadline: Mar 22, 10:00 AM", status: "OVERDUE" },
-  { id: 10, type: "Support Case", icon: LifeBuoy, title: "Summit Legal — Call recording not syncing", deadline: "SLA deadline: Mar 23, 10:00 AM", status: "OVERDUE" },
-  { id: 11, type: "Task", icon: CheckSquare, title: "Send co-marketing proposal to Mike Davis (...)", deadline: "Due: Mar 24, 10:00 AM", status: "OVERDUE" },
-  { id: 12, type: "Support Case", icon: LifeBuoy, title: "NovaCare — Patient callback feature request", deadline: "SLA deadline: Mar 24, 3:00 PM", status: "OVERDUE" },
-  { id: 13, type: "Support Case", icon: LifeBuoy, title: "Pacific Hospitality — Conference room phone", deadline: "SLA deadline: Mar 25, 3:00 PM", status: "OVERDUE" },
-  { id: 14, type: "Task", icon: CheckSquare, title: "Send revised proposal to Meridian Health", deadline: "Due: Mar 25, 3:00 PM", status: "OVERDUE" },
-  { id: 15, type: "Escalation", icon: AlertTriangle, title: "ESCL-2201: Pinnacle Retail store call drop", deadline: "Resolution ETA: Mar 28, 2026", status: "OVERDUE" },
-  { id: 16, type: "Task", icon: CheckSquare, title: "Complete BrightWave Health RFP response", deadline: "Due: Mar 28, 3:00 PM", status: "OVERDUE" },
+  { id: 2, type: "Escalation", icon: AlertTriangle, title: "ESCL-2198: Premier Dental routing logic", deadline: "Resolution ETA: Mar 22, 2026", status: "OVERDUE" },
+  { id: 3, type: "Support Case", icon: LifeBuoy, title: "Pinnacle Retail — Store call drops (4 locations)", deadline: "SLA deadline: Mar 21, 3:00 PM", status: "OVERDUE" },
+  { id: 4, type: "Task", icon: CheckSquare, title: "Send Pinnacle Retail network assessment report", deadline: "Due: Mar 28, 3:00 PM", status: "DUE TODAY" },
+  { id: 5, type: "Task", icon: CheckSquare, title: "Prepare Premier Dental remediation plan", deadline: "Due: Mar 28, 5:00 PM", status: "DUE TODAY" },
+  { id: 6, type: "Support Case", icon: LifeBuoy, title: "Summit Legal — Call recording not syncing", deadline: "SLA deadline: Mar 29, 10:00 AM", status: "DUE SOON" },
+  { id: 7, type: "Task", icon: CheckSquare, title: "Call Patricia Gomez — pitch intake CCaaS", deadline: "Due: Mar 29, 12:00 PM", status: "DUE SOON" },
+  { id: 8, type: "Task", icon: CheckSquare, title: "Schedule Salesforce integration demo for H...", deadline: "Due: Mar 30, 10:00 AM", status: "UPCOMING" },
+  { id: 9, type: "Support Case", icon: LifeBuoy, title: "NovaCare — Patient callback feature request", deadline: "SLA deadline: Mar 30, 3:00 PM", status: "UPCOMING" },
+  { id: 10, type: "Support Case", icon: LifeBuoy, title: "Greenfield PM — After-hours voicemail routing", deadline: "Due: Mar 31, 3:00 PM", status: "UPCOMING" },
+  { id: 11, type: "Task", icon: CheckSquare, title: "Send co-marketing proposal to Mike Davis (...)", deadline: "Due: Apr 1, 10:00 AM", status: "UPCOMING" },
+  { id: 12, type: "Support Case", icon: LifeBuoy, title: "Premier Dental — Multi-office call routing", deadline: "SLA deadline: Apr 1, 10:00 AM", status: "UPCOMING" },
+  { id: 13, type: "Task", icon: CheckSquare, title: "Send revised proposal to Meridian Health", deadline: "Due: Apr 2, 3:00 PM", status: "UPCOMING" },
+  { id: 14, type: "Support Case", icon: LifeBuoy, title: "Pacific Hospitality — Conference room phone", deadline: "SLA deadline: Apr 3, 3:00 PM", status: "UPCOMING" },
+  { id: 15, type: "Escalation", icon: AlertTriangle, title: "ESCL-2201: Pinnacle Retail store call drop", deadline: "Resolution ETA: Apr 5, 2026", status: "UPCOMING" },
+  { id: 16, type: "Task", icon: CheckSquare, title: "Complete BrightWave Health RFP response", deadline: "Due: Apr 7, 3:00 PM", status: "UPCOMING" },
 ];
 
 const calendarEvents = [
@@ -481,31 +481,43 @@ export default function RedesignedDashboard() {
               <div className="lg:col-span-3 rounded-[10px] bg-white border border-[#e7e8ec] shadow-[0_1.5px_4px_0_rgba(0,0,0,0.05)] overflow-hidden flex flex-col">
                 <div className="px-4 py-3 border-b border-[#e7e8ec] flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-7 h-7 rounded-[8px] bg-red-50 flex items-center justify-center">
-                      <AlertTriangle size={14} className="text-red-500" />
+                    <div className="w-7 h-7 rounded-[8px] bg-amber-50 flex items-center justify-center">
+                      <Clock size={14} className="text-amber-600" />
                     </div>
                     <h3 className="text-[14px] font-semibold text-[#161618]">Due / Overdue</h3>
-                    <span className="text-[11px] font-semibold text-red-600 bg-red-50 border border-red-200 rounded-full min-w-[20px] h-5 flex items-center justify-center px-1.5">{overdueItems.length}</span>
+                    <span className="text-[11px] font-semibold text-[#8b8d97] bg-[#f0f1f4] rounded-full min-w-[20px] h-5 flex items-center justify-center px-1.5">{dueItems.length}</span>
+                    <span className="text-[11px] font-semibold text-red-600 bg-red-50 border border-red-200 rounded-full h-5 flex items-center justify-center px-1.5">{dueItems.filter(i => i.status === "OVERDUE").length} overdue</span>
                   </div>
                   <MoreHorizontal size={16} className="text-[#8b8d97]" />
                 </div>
                 <ScrollArea className="max-h-[320px]">
                   <div className="divide-y divide-[#f0f1f4]">
-                    {overdueItems.map(item => (
-                      <div key={item.id} className="flex items-center gap-3 px-4 py-2.5 hover:bg-[#f8f9fb] transition-colors group">
-                        <div className={`p-1.5 rounded-[8px] shrink-0 ${typeIconColor(item.type)}`}>
-                          <item.icon size={14} strokeWidth={1.8} />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2">
-                            <span className="text-[11px] font-semibold text-[#8b8d97] shrink-0">{item.type}</span>
-                            <span className="text-[12px] text-[#323439] font-medium truncate">{item.title}</span>
+                    {dueItems.map(item => {
+                      const statusStyle = item.status === "OVERDUE"
+                        ? "text-red-600 bg-red-50 border-red-200"
+                        : item.status === "DUE TODAY"
+                        ? "text-amber-600 bg-amber-50 border-amber-200"
+                        : item.status === "DUE SOON"
+                        ? "text-orange-500 bg-orange-50 border-orange-200"
+                        : "text-[#8b8d97] bg-[#f0f1f4] border-[#e7e8ec]";
+                      return (
+                        <div key={item.id} className="flex items-center gap-3 px-4 py-2.5 hover:bg-[#f8f9fb] transition-colors group">
+                          <div className={`p-1.5 rounded-[8px] shrink-0 ${typeIconColor(item.type)}`}>
+                            <item.icon size={14} strokeWidth={1.8} />
                           </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2">
+                              <span className="text-[11px] font-semibold text-[#8b8d97] shrink-0">{item.type}</span>
+                              <span className="text-[12px] text-[#323439] font-medium truncate">{item.title}</span>
+                            </div>
+                          </div>
+                          <span className="text-[10px] text-[#8b8d97] whitespace-nowrap shrink-0">{item.deadline}</span>
+                          <span className={`text-[9px] font-bold border rounded-full px-2 py-0.5 shrink-0 uppercase tracking-wider ${statusStyle}`}>
+                            {item.status === "OVERDUE" ? "Overdue" : item.status === "DUE TODAY" ? "Today" : item.status === "DUE SOON" ? "Soon" : "Upcoming"}
+                          </span>
                         </div>
-                        <span className="text-[10px] text-[#8b8d97] whitespace-nowrap shrink-0">{item.deadline}</span>
-                        <span className="text-[9px] font-bold text-red-600 bg-red-50 border border-red-200 rounded-full px-2 py-0.5 shrink-0 uppercase tracking-wider">Overdue</span>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </ScrollArea>
               </div>
