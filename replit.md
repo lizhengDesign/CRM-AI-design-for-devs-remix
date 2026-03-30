@@ -91,6 +91,16 @@ Generated Zod schemas from the OpenAPI spec (e.g. `HealthCheckResponse`). Used b
 
 Generated React Query hooks and fetch client from the OpenAPI spec (e.g. `useHealthCheck`, `healthCheck`).
 
+### `artifacts/crm-dashboard` (`@workspace/crm-dashboard`)
+
+React + Vite frontend-only CRM dashboard for a real estate office. Uses the NOVA/Spring design system with Inter font, `#0040dd` blue accent, light `#f5f6f9` sidebar background, 10px rounded corners.
+
+- Entry: `src/App.tsx` — renders the Dashboard page
+- Main page: `src/pages/Dashboard.tsx` — full CRM dashboard with sidebar, due/overdue list, schedule calendar, pipeline boards (tabbed), recent interactions table with detail panel
+- Design tokens: sidebar bg `#f5f6f9`, border `#e7e8ec`, text `#323439`, muted `#8b8d97`, active blue `#0040dd`, card bg white, border-radius 10px, shadow `0_1.5px_4px_0_rgba(0,0,0,0.05)`
+- Preview path: `/crm-dashboard/`
+- No backend required — all data is static/mock
+
 ### `scripts` (`@workspace/scripts`)
 
 Utility scripts package. Each script is a `.ts` file in `src/` with a corresponding npm script in `package.json`. Run scripts via `pnpm --filter @workspace/scripts run <script>`. Scripts can import any workspace package (e.g., `@workspace/db`) by adding it as a dependency in `scripts/package.json`.
