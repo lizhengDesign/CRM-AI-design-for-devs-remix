@@ -42,6 +42,7 @@ import {
 } from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -300,60 +301,45 @@ const Sidebar = ({ collapsed, onToggle }: { collapsed: boolean, onToggle: () => 
       <NavSection label="Contacts" items={contactsNav} collapsed={collapsed} />
       <NavSection label="Items" items={itemsNav} collapsed={collapsed} />
       <NavSection label="Interactions" items={interactionsNav} collapsed={collapsed} />
-
-      {!collapsed ? (
-        <div className="flex items-center pt-4 pb-2 px-2.5">
-          <span className="text-[11px] font-medium text-[#8b8d97] uppercase tracking-[0.06em]">Configuration</span>
-          <div className="flex-1 h-px bg-[#e7e8ec] ml-3" />
-        </div>
-      ) : (
-        <div className="pt-3 pb-1 px-2.5">
-          <div className="h-px bg-[#e7e8ec]" />
-        </div>
-      )}
-      <div className="space-y-px">
-        {configNav.map((item) => (
-          <button
-            key={item.name}
-            className={`w-full flex items-center rounded-[10px] text-[14px] font-medium text-[#323439] hover:bg-white hover:shadow-[0_1.5px_4px_0_rgba(0,0,0,0.06)] transition-all group ${
-              collapsed ? "justify-center p-[7px]" : "gap-3 px-2.5 py-[7px]"
-            }`}
-            title={collapsed ? item.name : undefined}
-          >
-            <item.icon size={20} strokeWidth={1.8} className="text-[#8b8d97] opacity-80 group-hover:opacity-100 shrink-0" />
-            {!collapsed && <span className="flex-1 text-left opacity-80 group-hover:opacity-100">{item.name}</span>}
-          </button>
-        ))}
-      </div>
     </div>
 
     <div className="border-t border-[#e7e8ec] pt-3 mt-1">
-      {collapsed ? (
-        <div className="flex flex-col items-center gap-2">
-          <Avatar className="h-8 w-8 rounded-full border border-[#e7e8ec]">
-            <AvatarFallback className="bg-[#e7e8ec] text-[#48494c] text-xs font-semibold">SV</AvatarFallback>
-          </Avatar>
-          <button className="p-1 text-[#8b8d97] hover:text-[#323439] transition-colors" title="Sign Out">
-            <LogOut size={16} strokeWidth={1.8} />
-          </button>
-        </div>
-      ) : (
-        <>
-          <div className="flex items-center gap-2.5 px-1">
-            <Avatar className="h-8 w-8 rounded-full border border-[#e7e8ec]">
-              <AvatarFallback className="bg-[#e7e8ec] text-[#48494c] text-xs font-semibold">SV</AvatarFallback>
-            </Avatar>
-            <div className="flex-1 min-w-0">
-              <p className="text-[13px] font-semibold text-[#161618] leading-tight truncate">Sergey Vlastuk</p>
-              <p className="text-[11px] text-[#8b8d97] truncate">admin</p>
-            </div>
+      <div className={`flex items-center ${collapsed ? "justify-center" : "gap-2.5 px-1"}`}>
+        <Avatar className="h-8 w-8 rounded-full border border-[#e7e8ec] shrink-0">
+          <AvatarFallback className="bg-[#e7e8ec] text-[#48494c] text-xs font-semibold">SV</AvatarFallback>
+        </Avatar>
+        {!collapsed && (
+          <div className="flex-1 min-w-0">
+            <p className="text-[13px] font-semibold text-[#161618] leading-tight truncate">Serhii Vlastiuk</p>
+            <p className="text-[11px] text-[#8b8d97] truncate">admin</p>
           </div>
-          <button className="mt-2 flex items-center gap-2 px-1 py-1 text-[12px] text-[#8b8d97] hover:text-[#323439] transition-colors">
-            <LogOut size={14} strokeWidth={1.8} />
-            Sign Out
-          </button>
-        </>
-      )}
+        )}
+        <Popover>
+          <PopoverTrigger asChild>
+            <button className="p-1.5 rounded-[8px] text-[#8b8d97] hover:text-[#323439] hover:bg-white hover:shadow-[0_1.5px_4px_0_rgba(0,0,0,0.06)] transition-all shrink-0" title="Settings">
+              <Settings size={16} strokeWidth={1.8} />
+            </button>
+          </PopoverTrigger>
+          <PopoverContent side="top" align="end" className="w-[200px] p-1.5 rounded-[10px] border border-[#e7e8ec] shadow-[0_4px_12px_-2px_rgba(0,0,0,0.1)]">
+            <div className="space-y-0.5">
+              {configNav.map((item) => (
+                <button
+                  key={item.name}
+                  className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-[8px] text-[13px] font-medium text-[#323439] hover:bg-[#f5f6f9] transition-colors group"
+                >
+                  <item.icon size={16} strokeWidth={1.8} className="text-[#8b8d97] group-hover:text-[#323439] transition-colors shrink-0" />
+                  <span>{item.name}</span>
+                </button>
+              ))}
+              <div className="mx-2 my-1 h-px bg-[#e7e8ec]" />
+              <button className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-[8px] text-[13px] font-medium text-red-600 hover:bg-red-50 transition-colors group">
+                <LogOut size={16} strokeWidth={1.8} className="shrink-0" />
+                <span>Sign Out</span>
+              </button>
+            </div>
+          </PopoverContent>
+        </Popover>
+      </div>
     </div>
   </aside>
 );
