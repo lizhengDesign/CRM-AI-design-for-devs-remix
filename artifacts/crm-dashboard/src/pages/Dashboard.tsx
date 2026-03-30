@@ -247,7 +247,7 @@ const Sidebar = ({ collapsed, onToggle }: { collapsed: boolean, onToggle: () => 
           <div className="w-6 h-6 rounded-[6px] bg-gradient-to-br from-[#ff8800] to-[#ff6600] flex items-center justify-center shadow-sm">
             <Building2 size={14} className="text-white" strokeWidth={2.2} />
           </div>
-          <span className="font-bold text-[15px] text-[#161618] leading-5">Real Estate Office</span>
+          <span className="font-bold text-[15px] text-[#161618] leading-5">CRM AI</span>
         </div>
       )}
       <button onClick={onToggle} className="p-2 rounded-full hover:bg-white/80 transition-colors">
