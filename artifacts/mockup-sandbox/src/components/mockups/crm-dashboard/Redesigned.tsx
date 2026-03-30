@@ -37,7 +37,8 @@ import {
   Calendar,
   X,
   ChevronDown,
-  MessageSquare
+  MessageSquare,
+  ArrowRight
 } from "lucide-react";
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -493,13 +494,13 @@ export default function RedesignedDashboard() {
                 <div className="max-h-[320px] overflow-y-auto scrollbar-auto-hide">
                   <div className="divide-y divide-[#f0f1f4]">
                     {dueItems.map(item => {
-                      const statusStyle = item.status === "OVERDUE"
-                        ? "text-red-600 bg-red-50 border-red-200"
+                      const statusIcon = item.status === "OVERDUE"
+                        ? <AlertTriangle size={12} className="text-red-400" />
                         : item.status === "DUE TODAY"
-                        ? "text-amber-600 bg-amber-50 border-amber-200"
+                        ? <Clock size={12} className="text-amber-400" />
                         : item.status === "DUE SOON"
-                        ? "text-orange-500 bg-orange-50 border-orange-200"
-                        : "text-[#8b8d97] bg-[#f0f1f4] border-[#e7e8ec]";
+                        ? <Clock size={12} className="text-orange-300" />
+                        : <ArrowRight size={12} className="text-[#c5c6cc]" />;
                       return (
                         <div key={item.id} className="flex items-center gap-3 px-4 py-2.5 hover:bg-[#f8f9fb] transition-colors group">
                           <div className={`p-1.5 rounded-[8px] shrink-0 ${typeIconColor(item.type)}`}>
@@ -512,9 +513,7 @@ export default function RedesignedDashboard() {
                             </div>
                           </div>
                           <span className="text-[10px] text-[#8b8d97] whitespace-nowrap shrink-0">{item.deadline}</span>
-                          <span className={`text-[9px] font-bold border rounded-full px-2 py-0.5 shrink-0 uppercase tracking-wider ${statusStyle}`}>
-                            {item.status === "OVERDUE" ? "Overdue" : item.status === "DUE TODAY" ? "Today" : item.status === "DUE SOON" ? "Soon" : "Upcoming"}
-                          </span>
+                          <span className="shrink-0" title={item.status}>{statusIcon}</span>
                         </div>
                       );
                     })}
