@@ -390,40 +390,41 @@ const ScheduleCalendar = () => {
   const hours = ["7 AM", "8 AM", "9 AM", "10 AM", "11 AM", "12 PM"];
   return (
     <div className="flex flex-col h-full">
-      <div className="px-4 pt-4 pb-3 border-b border-slate-100 flex items-center justify-between">
+      <div className="px-4 py-3 border-b border-[#e7e8ec] flex items-center justify-between">
         <div>
-          <div className="flex items-center gap-2">
-            <Calendar size={16} className="text-blue-600" />
-            <h3 className="text-sm font-semibold text-slate-800">Schedule Calendar</h3>
-            <CalendarDays size={14} className="text-slate-400" />
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-[8px] bg-[#0040dd]/10 flex items-center justify-center">
+              <Calendar size={14} className="text-[#0040dd]" />
+            </div>
+            <h3 className="text-[14px] font-semibold text-[#161618]">Schedule Calendar</h3>
           </div>
-          <p className="text-lg font-semibold text-slate-900 mt-1">Saturday, March 28</p>
-          <p className="text-xs text-slate-500">Date picker view for the selected day's scheduled items.</p>
+          <p className="text-[16px] font-bold text-[#161618] mt-1.5">Saturday, March 28</p>
+          <p className="text-[11px] text-[#8b8d97]">Date picker view for the selected day's scheduled items.</p>
         </div>
-        <p className="text-xs text-slate-400 whitespace-nowrap">8:00 AM first start</p>
+        <span className="text-[10px] text-[#8b8d97] whitespace-nowrap bg-[#f0f1f4] px-2 py-1 rounded-full">8:00 AM first start</span>
       </div>
-      <div className="px-3 py-2 border-b border-slate-100 flex items-center gap-2">
-        <Button variant="outline" size="sm" className="h-7 text-xs px-2.5">Prev</Button>
-        <Button variant="outline" size="sm" className="h-7 text-xs px-2.5">Today</Button>
-        <Input defaultValue="03/28/2026" className="h-7 w-28 text-xs border-slate-200" />
-        <Calendar size={14} className="text-slate-400" />
-        <Button variant="outline" size="sm" className="h-7 text-xs px-2.5">Next</Button>
+      <div className="px-3 py-2 border-b border-[#e7e8ec] flex items-center gap-2">
+        <button className="h-7 px-2.5 text-[11px] font-medium text-[#48494c] bg-white border border-[#e7e8ec] rounded-[8px] hover:bg-[#f8f9fb] transition-colors">Prev</button>
+        <button className="h-7 px-2.5 text-[11px] font-medium text-[#48494c] bg-white border border-[#e7e8ec] rounded-[8px] hover:bg-[#f8f9fb] transition-colors">Today</button>
+        <input defaultValue="03/28/2026" className="h-7 w-28 text-[11px] text-[#323439] border border-[#e7e8ec] rounded-[8px] px-2 bg-white focus:outline-none focus:border-[#0040dd]" />
+        <Calendar size={14} className="text-[#8b8d97]" />
+        <button className="h-7 px-2.5 text-[11px] font-medium text-[#48494c] bg-white border border-[#e7e8ec] rounded-[8px] hover:bg-[#f8f9fb] transition-colors">Next</button>
       </div>
       <div className="flex-1 overflow-auto">
         <div className="relative">
           {hours.map((hour, idx) => (
-            <div key={idx} className="flex items-start h-14 border-b border-slate-50">
-              <span className="w-16 text-right pr-3 text-[11px] text-slate-400 pt-0.5 shrink-0">{hour}</span>
-              <div className="flex-1 border-l border-slate-100 h-full relative">
+            <div key={idx} className="flex items-start h-14 border-b border-[#f0f1f4]">
+              <span className="w-16 text-right pr-3 text-[11px] text-[#8b8d97] pt-0.5 shrink-0">{hour}</span>
+              <div className="flex-1 border-l border-[#e7e8ec] h-full relative">
                 {hour === "8 AM" && (
-                  <div className="absolute left-2 right-2 top-0 rounded-md bg-blue-50 border border-blue-200 p-2" style={{ height: "84px" }}>
-                    <p className="text-xs font-semibold text-blue-800">8:00 AM - 9:30 AM</p>
-                    <p className="text-xs font-medium text-blue-700 mt-0.5">Demo — Bright Horizons vs Zoom Phone</p>
-                    <p className="text-[10px] text-blue-500 mt-0.5">Bright Horizons Education · Scheduled</p>
+                  <div className="absolute left-2 right-2 top-0 rounded-[8px] bg-[#0040dd]/[0.06] border border-[#0040dd]/20 p-2.5" style={{ height: "84px" }}>
+                    <p className="text-[11px] font-bold text-[#0040dd]">8:00 AM - 9:30 AM</p>
+                    <p className="text-[12px] font-semibold text-[#323439] mt-0.5">Demo — Bright Horizons vs Zoom Phone</p>
+                    <p className="text-[10px] text-[#8b8d97] mt-0.5">Bright Horizons Education · Scheduled</p>
                   </div>
                 )}
                 {hour === "8 AM" && (
-                  <div className="absolute right-0 top-0 text-[10px] text-slate-400 bg-white px-1.5 py-0.5 rounded border border-slate-100">
+                  <div className="absolute right-0 top-0 text-[10px] text-[#8b8d97] bg-white px-2 py-0.5 rounded-full border border-[#e7e8ec] shadow-sm">
                     Appointment
                   </div>
                 )}
@@ -436,30 +437,27 @@ const ScheduleCalendar = () => {
   );
 };
 
-const MiniPipeline = ({ pipeline }: { pipeline: typeof pipelineData[0] }) => (
-  <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden flex flex-col min-w-[200px] flex-1">
-    <div className={`px-3 py-2 border-b flex items-center justify-between ${pipeline.headerBg}`}>
-      <div className="flex items-center gap-2">
-        <div className={`w-2 h-2 rounded-full ${pipeline.color}`} />
-        <h4 className={`text-xs font-semibold ${pipeline.headerText}`}>{pipeline.name}</h4>
-        <span className="text-[10px] text-slate-500 font-medium">{pipeline.count}</span>
-      </div>
-      <MoreHorizontal size={14} className="text-slate-400" />
-    </div>
-    <div className="flex flex-1 divide-x divide-slate-100 overflow-x-auto">
+const PipelineBoard = ({ pipeline }: { pipeline: typeof pipelineData[0] }) => (
+  <div className="rounded-[10px] bg-white border border-[#e7e8ec] shadow-[0_1.5px_4px_0_rgba(0,0,0,0.05)] overflow-hidden">
+    <div className="flex gap-0 overflow-x-auto">
       {pipeline.columns.map((col, ci) => (
-        <div key={ci} className="flex-1 min-w-[100px] p-1.5">
-          <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide px-1 pb-1 flex items-center justify-between">
-            <span>{col.title}</span>
-            <span className="text-slate-400">{col.count}</span>
+        <div key={ci} className="flex-1 min-w-[180px] border-r border-[#e7e8ec] last:border-r-0">
+          <div className="px-3 py-2.5 bg-[#f8f9fb] border-b border-[#e7e8ec] flex items-center justify-between">
+            <span className="text-[12px] font-semibold text-[#48494c] uppercase tracking-[0.04em]">{col.title}</span>
+            <span className="text-[11px] font-medium text-[#8b8d97] bg-white border border-[#e7e8ec] rounded-full w-5 h-5 flex items-center justify-center">{col.count}</span>
           </div>
-          <div className="space-y-1">
+          <div className="p-2 space-y-2 min-h-[100px]">
             {col.items.map((item, ii) => (
-              <div key={ii} className="bg-slate-50 rounded-md px-2 py-1.5 hover:bg-slate-100 transition-colors cursor-pointer border border-slate-100">
-                <p className="text-[11px] font-medium text-slate-700 truncate">{item.name}</p>
-                {item.sub && <p className="text-[10px] text-slate-400 truncate">{item.sub}</p>}
+              <div key={ii} className="bg-white rounded-[8px] px-3 py-2.5 border border-[#e7e8ec] hover:shadow-[0_1.5px_4px_0_rgba(0,0,0,0.06)] hover:border-[#d0d2d8] transition-all cursor-pointer group">
+                <p className="text-[13px] font-medium text-[#323439] truncate group-hover:text-[#0040dd] transition-colors">{item.name}</p>
+                {item.sub && <p className="text-[11px] text-[#8b8d97] mt-0.5 truncate">{item.sub}</p>}
               </div>
             ))}
+            {col.items.length === 0 && (
+              <div className="flex items-center justify-center h-16 text-[11px] text-[#8b8d97] italic">
+                No items
+              </div>
+            )}
           </div>
         </div>
       ))}
@@ -480,138 +478,151 @@ export default function RedesignedDashboard() {
           <div className="p-4 space-y-4">
             
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
-              <div className="lg:col-span-3 rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden flex flex-col">
-                <div className="px-4 py-2.5 border-b border-slate-100 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <AlertTriangle size={14} className="text-red-500" />
-                    <h3 className="text-sm font-semibold text-red-600">Due / Overdue</h3>
-                    <Badge variant="secondary" className="text-[10px] h-5 px-1.5 bg-red-50 text-red-600 border-red-200">{overdueItems.length}</Badge>
+              <div className="lg:col-span-3 rounded-[10px] bg-white border border-[#e7e8ec] shadow-[0_1.5px_4px_0_rgba(0,0,0,0.05)] overflow-hidden flex flex-col">
+                <div className="px-4 py-3 border-b border-[#e7e8ec] flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-7 h-7 rounded-[8px] bg-red-50 flex items-center justify-center">
+                      <AlertTriangle size={14} className="text-red-500" />
+                    </div>
+                    <h3 className="text-[14px] font-semibold text-[#161618]">Due / Overdue</h3>
+                    <span className="text-[11px] font-semibold text-red-600 bg-red-50 border border-red-200 rounded-full min-w-[20px] h-5 flex items-center justify-center px-1.5">{overdueItems.length}</span>
                   </div>
-                  <MoreHorizontal size={14} className="text-slate-400" />
+                  <MoreHorizontal size={16} className="text-[#8b8d97]" />
                 </div>
                 <ScrollArea className="max-h-[320px]">
-                  <div className="divide-y divide-slate-50">
+                  <div className="divide-y divide-[#f0f1f4]">
                     {overdueItems.map(item => (
-                      <div key={item.id} className="flex items-center gap-3 px-4 py-2 hover:bg-slate-50/50 transition-colors group">
-                        <div className={`p-1 rounded-md shrink-0 ${typeIconColor(item.type)}`}>
-                          <item.icon size={13} />
+                      <div key={item.id} className="flex items-center gap-3 px-4 py-2.5 hover:bg-[#f8f9fb] transition-colors group">
+                        <div className={`p-1.5 rounded-[8px] shrink-0 ${typeIconColor(item.type)}`}>
+                          <item.icon size={14} strokeWidth={1.8} />
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
-                            <span className="text-[11px] font-medium text-slate-500 shrink-0">{item.type}</span>
-                            <span className="text-xs text-slate-800 font-medium truncate">{item.title}</span>
+                            <span className="text-[11px] font-semibold text-[#8b8d97] shrink-0">{item.type}</span>
+                            <span className="text-[12px] text-[#323439] font-medium truncate">{item.title}</span>
                           </div>
                         </div>
-                        <span className="text-[10px] text-slate-400 whitespace-nowrap shrink-0">{item.deadline}</span>
-                        <Badge variant="destructive" className="text-[9px] h-4 px-1.5 shrink-0">OVERDUE</Badge>
+                        <span className="text-[10px] text-[#8b8d97] whitespace-nowrap shrink-0">{item.deadline}</span>
+                        <span className="text-[9px] font-bold text-red-600 bg-red-50 border border-red-200 rounded-full px-2 py-0.5 shrink-0 uppercase tracking-wider">Overdue</span>
                       </div>
                     ))}
                   </div>
                 </ScrollArea>
               </div>
 
-              <div className="lg:col-span-2 rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden flex flex-col max-h-[380px]">
+              <div className="lg:col-span-2 rounded-[10px] bg-white border border-[#e7e8ec] shadow-[0_1.5px_4px_0_rgba(0,0,0,0.05)] overflow-hidden flex flex-col max-h-[380px]">
                 <ScheduleCalendar />
               </div>
             </div>
 
-            <Tabs defaultValue="opportunity" className="w-full">
-              <div className="flex items-center gap-2 mb-3">
-                <TabsList className="bg-white border border-slate-200 shadow-sm p-1 h-auto flex-wrap">
+            <div className="rounded-[10px] bg-white border border-[#e7e8ec] shadow-[0_1.5px_4px_0_rgba(0,0,0,0.05)] overflow-hidden">
+              <Tabs defaultValue="opportunity" className="w-full">
+                <TabsList className="w-full justify-start h-auto p-0 bg-transparent rounded-none border-b border-[#e7e8ec] px-4 pt-1 gap-0">
                   {pipelineData.map((p, idx) => (
                     <TabsTrigger
                       key={idx}
                       value={p.name.split(" ")[0].toLowerCase()}
-                      className="text-xs px-3 py-1.5 gap-1.5 data-[state=active]:shadow-sm"
+                      className="relative text-[13px] font-medium px-4 py-2.5 rounded-none border-b-2 border-transparent text-[#8b8d97] hover:text-[#323439] transition-colors data-[state=active]:text-[#0040dd] data-[state=active]:border-[#0040dd] data-[state=active]:bg-transparent data-[state=active]:shadow-none bg-transparent shadow-none flex items-center gap-2"
                     >
                       <span className={`w-2 h-2 rounded-full ${p.color} shrink-0`} />
-                      {p.name}
-                      <Badge variant="secondary" className="text-[9px] h-4 px-1 ml-0.5">{p.count}</Badge>
+                      {p.name.replace(" Pipeline", "")}
+                      <span className="text-[11px] font-semibold text-[#8b8d97] bg-[#f0f1f4] rounded-full min-w-[20px] h-5 flex items-center justify-center px-1.5">{p.count}</span>
                     </TabsTrigger>
                   ))}
                 </TabsList>
-              </div>
-              {pipelineData.map((pipeline, idx) => (
-                <TabsContent key={idx} value={pipeline.name.split(" ")[0].toLowerCase()} className="mt-0">
-                  <MiniPipeline pipeline={pipeline} />
-                </TabsContent>
-              ))}
-            </Tabs>
+                {pipelineData.map((pipeline, idx) => (
+                  <TabsContent key={idx} value={pipeline.name.split(" ")[0].toLowerCase()} className="mt-0">
+                    <PipelineBoard pipeline={pipeline} />
+                  </TabsContent>
+                ))}
+              </Tabs>
+            </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
-              <div className="lg:col-span-3 rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-                <div className="px-4 py-2.5 border-b border-slate-100 flex items-center gap-2">
-                  <MessageSquare size={14} className="text-blue-600" />
-                  <h3 className="text-sm font-semibold text-slate-800">Recent Interactions</h3>
-                  <Badge variant="secondary" className="text-[10px] h-5 px-1.5">{recentInteractions.length}</Badge>
+              <div className="lg:col-span-3 rounded-[10px] bg-white border border-[#e7e8ec] shadow-[0_1.5px_4px_0_rgba(0,0,0,0.05)] overflow-hidden">
+                <div className="px-4 py-3 border-b border-[#e7e8ec] flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-7 h-7 rounded-[8px] bg-[#0040dd]/10 flex items-center justify-center">
+                      <MessageSquare size={14} className="text-[#0040dd]" />
+                    </div>
+                    <h3 className="text-[14px] font-semibold text-[#161618]">Recent Interactions</h3>
+                    <span className="text-[11px] font-semibold text-[#8b8d97] bg-[#f0f1f4] rounded-full min-w-[20px] h-5 flex items-center justify-center px-1.5">{recentInteractions.length}</span>
+                  </div>
+                  <MoreHorizontal size={16} className="text-[#8b8d97]" />
                 </div>
                 <ScrollArea className="max-h-[280px]">
-                  <Table>
-                    <TableBody>
-                      {recentInteractions.map(interaction => (
-                        <TableRow
-                          key={interaction.id}
-                          className={`cursor-pointer transition-colors border-slate-50 ${selectedInteractionId === interaction.id ? "bg-blue-50/50" : "hover:bg-slate-50/50"}`}
-                          onClick={() => setSelectedInteractionId(interaction.id)}
-                        >
-                          <TableCell className="py-2 px-3 w-[80px] text-[11px] text-slate-400 whitespace-nowrap">{interaction.date}</TableCell>
-                          <TableCell className="py-2 px-2 w-[50px]">
-                            <div className={`inline-flex items-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded-full ${
-                              interaction.type === "email" ? "bg-blue-50 text-blue-600" : "bg-green-50 text-green-600"
-                            }`}>
-                              {interaction.type === "email" ? <Mail size={10} /> : <Phone size={10} />}
-                              {interaction.type}
-                            </div>
-                          </TableCell>
-                          <TableCell className="py-2 px-2 text-xs font-medium text-slate-700 w-[100px] whitespace-nowrap">{interaction.contact}</TableCell>
-                          <TableCell className="py-2 px-2 text-[11px] text-slate-500 truncate max-w-[300px]">{interaction.notes}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
+                  <div className="divide-y divide-[#f0f1f4]">
+                    {recentInteractions.map(interaction => (
+                      <div
+                        key={interaction.id}
+                        className={`flex items-center gap-3 px-4 py-2.5 cursor-pointer transition-all ${
+                          selectedInteractionId === interaction.id
+                            ? "bg-[#0040dd]/[0.04] border-l-2 border-l-[#0040dd]"
+                            : "hover:bg-[#f8f9fb] border-l-2 border-l-transparent"
+                        }`}
+                        onClick={() => setSelectedInteractionId(interaction.id)}
+                      >
+                        <span className="text-[11px] text-[#8b8d97] w-[76px] shrink-0 tabular-nums">{interaction.date}</span>
+                        <div className={`inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full shrink-0 ${
+                          interaction.type === "email"
+                            ? "bg-[#0040dd]/10 text-[#0040dd]"
+                            : "bg-emerald-50 text-emerald-600"
+                        }`}>
+                          {interaction.type === "email" ? <Mail size={10} /> : <Phone size={10} />}
+                          {interaction.type}
+                        </div>
+                        <span className="text-[12px] font-semibold text-[#323439] w-[90px] shrink-0 truncate">{interaction.contact}</span>
+                        <span className="text-[11px] text-[#8b8d97] truncate flex-1">{interaction.notes}</span>
+                      </div>
+                    ))}
+                  </div>
                 </ScrollArea>
               </div>
 
               {selectedInteractionId && (
-                <div className="lg:col-span-2 rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden flex flex-col max-h-[340px]">
-                  <div className="px-4 py-2.5 border-b border-slate-100 flex items-center justify-between">
-                    <p className="text-xs text-slate-700 font-medium truncate flex-1">{selectedInteraction.title}</p>
-                    <button onClick={() => setSelectedInteractionId(null)} className="p-1 hover:bg-slate-100 rounded transition-colors shrink-0 ml-2">
-                      <X size={14} className="text-slate-400" />
+                <div className="lg:col-span-2 rounded-[10px] bg-white border border-[#e7e8ec] shadow-[0_1.5px_4px_0_rgba(0,0,0,0.05)] overflow-hidden flex flex-col max-h-[340px]">
+                  <div className="px-4 py-3 border-b border-[#e7e8ec] flex items-center justify-between">
+                    <p className="text-[13px] text-[#323439] font-semibold truncate flex-1 leading-snug">{selectedInteraction.title}</p>
+                    <button onClick={() => setSelectedInteractionId(null)} className="p-1.5 hover:bg-[#f0f1f4] rounded-full transition-colors shrink-0 ml-2">
+                      <X size={14} className="text-[#8b8d97]" />
                     </button>
                   </div>
                   <ScrollArea className="flex-1">
-                    <div className="p-4 space-y-3">
-                      <div className="bg-slate-50 rounded-lg p-3 border border-slate-100">
-                        <p className="text-sm font-medium text-slate-800 leading-relaxed">{selectedInteraction.fullNote}</p>
+                    <div className="p-4 space-y-4">
+                      <div className="bg-[#f8f9fb] rounded-[8px] p-3.5 border border-[#e7e8ec]">
+                        <p className="text-[13px] font-medium text-[#323439] leading-relaxed">{selectedInteraction.fullNote}</p>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <div className="inline-flex items-center gap-1 text-[11px] font-medium px-2 py-1 rounded-full bg-green-50 text-green-600 border border-green-200">
+
+                      <div className="flex items-center gap-2.5">
+                        <div className="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200">
                           <Phone size={11} />
                           {selectedInteraction.type}
                         </div>
-                        <span className="text-[11px] text-slate-400">{selectedInteraction.date}</span>
-                      </div>
-                      <p className="text-[11px] text-slate-500 leading-relaxed">{selectedInteraction.fullNote}</p>
-
-                      <div className="pt-2 border-t border-slate-100">
-                        <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Related</p>
-                        {selectedInteraction.related.map((rel, i) => (
-                          <div key={i} className="flex items-center gap-2 mb-1.5">
-                            <span className="text-[10px] text-slate-400 w-16">{rel.label}</span>
-                            <span className="text-xs text-blue-600 font-medium hover:underline cursor-pointer">{rel.value}</span>
-                          </div>
-                        ))}
+                        <span className="text-[11px] text-[#8b8d97]">{selectedInteraction.date}</span>
                       </div>
 
-                      <div className="pt-2 border-t border-slate-100">
-                        <div className="flex items-center gap-1 mb-2">
-                          <ChevronDown size={12} className="text-slate-400" />
-                          <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Transcript</p>
+                      <div className="pt-3 border-t border-[#e7e8ec]">
+                        <p className="text-[10px] font-semibold text-[#8b8d97] uppercase tracking-[0.06em] mb-2.5">Related</p>
+                        <div className="space-y-2">
+                          {selectedInteraction.related.map((rel, i) => (
+                            <div key={i} className="flex items-center gap-3">
+                              <span className="text-[11px] text-[#8b8d97] w-20 shrink-0">{rel.label}</span>
+                              <span className="text-[12px] text-[#0040dd] font-medium hover:underline cursor-pointer">{rel.value}</span>
+                            </div>
+                          ))}
                         </div>
-                        <p className="text-xs text-slate-600 leading-relaxed bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-                          {selectedInteraction.transcript}
-                        </p>
+                      </div>
+
+                      <div className="pt-3 border-t border-[#e7e8ec]">
+                        <div className="flex items-center gap-1.5 mb-2.5">
+                          <ChevronDown size={12} className="text-[#8b8d97]" />
+                          <p className="text-[10px] font-semibold text-[#8b8d97] uppercase tracking-[0.06em]">Transcript</p>
+                        </div>
+                        <div className="bg-[#f8f9fb] rounded-[8px] p-3 border border-[#e7e8ec]">
+                          <p className="text-[12px] text-[#48494c] leading-relaxed">
+                            {selectedInteraction.transcript}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </ScrollArea>
